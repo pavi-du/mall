@@ -2,6 +2,7 @@ package com.xupt.mall.mapper;
 
 import com.xupt.mall.entity.BaseAttr;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
@@ -11,6 +12,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author testjava
  * @since 2020-05-25
  */
+
 public interface BaseAttrMapper extends BaseMapper<BaseAttr> {
 
 }
