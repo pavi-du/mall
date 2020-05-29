@@ -1,11 +1,11 @@
 package com.xupt.mall.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import java.util.Date;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -16,39 +16,27 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author testjava
- * @since 2020-05-25
+ * @since 2020-05-28
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="OrderInfo对象", description="")
-public class OrderInfo implements Serializable {
+@ApiModel(value="SpuSaleAttr对象", description="")
+public class SpuSaleAttr implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "ID", type = IdType.AUTO)
     private Integer id;
 
-    @TableField("TOTAL_AMOUNT")
-    private String totalAmount;
+    @TableField("SALE_ATTR_ID")
+    private Integer saleAttrId;
 
-    @TableField("USER_ID")
-    private String userId;
+    @TableField("SALE_ATTR_NAME")
+    private String saleAttrName;
 
-    @TableField("ORDER_STATUS")
-    private String orderStatus;
-
-    @TableField("ADDRESS")
-    private String address;
-
-    @TableField("CREAET_TIME")
-    private Date creaetTime;
-
-    @TableField("EXPIRE_TIME")
-    private Date expireTime;
-
-    @TableField("IMG_URL")
-    private String imgUrl;
+    @TableField("SPU_ID")
+    private Integer spuId;
 
 
 }

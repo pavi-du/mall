@@ -38,5 +38,11 @@ public class OrderDetail implements Serializable {
     @TableField("IMG_URL")
     private String imgUrl;
 
+    @TableField("ORDER_ID")
+    private Integer orderId;
+
+    @TableField("SKU_NUME")
+    private Integer skuNume;
+
 
 }

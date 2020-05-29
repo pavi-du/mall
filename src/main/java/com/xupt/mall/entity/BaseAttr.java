@@ -4,6 +4,10 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.xupt.mall.vo.BaseAttrValueVO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -31,6 +35,9 @@ public class BaseAttr implements Serializable {
 
     @TableField("BASE_ATTR_NAME")
     private String baseAttrName;
+
+    @TableField(exist = false)
+    private List<BaseAttrValueVO> baseAttrValueList = new ArrayList<>();
 
 
 }

@@ -47,5 +47,8 @@ public class SkuInfo implements Serializable {
     @TableField("SKU_DESC")
     private String skuDesc;
 
+    @TableField(exist = false)
+    private String catalogName;
+
 
 }
