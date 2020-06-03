@@ -25,15 +25,15 @@ public class UploadSkuInfo {
 
     private String skuCount;
 
-    private List<String> catalogIdList = new ArrayList<>();
+    private List<Integer> catalogIdList = new ArrayList<>();
 
 
     private String skuImg;
 
     private String skuDesc;
 
-    private List<String> baseAttrIdList = new ArrayList<>();
-    private List<String> baseAttrValueIdList = new ArrayList<>();
+    private List<Integer> baseAttrIdList = new ArrayList<>();
+    private List<Integer> baseAttrValueIdList = new ArrayList<>();
 
     private List<Catalog> catalogLit = new ArrayList<>();
 

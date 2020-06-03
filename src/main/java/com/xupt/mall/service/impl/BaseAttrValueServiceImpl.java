@@ -46,9 +46,9 @@ public class BaseAttrValueServiceImpl extends ServiceImpl<BaseAttrValueMapper, B
     }
 
     @Override
-    public Boolean deleteBaseAttrValue(String id) {
+    public Boolean deleteBaseAttrValue(Integer id) {
 
-        int count = baseMapper.deleteById(Integer.parseInt(id));
+        int count = baseMapper.deleteById(id);
         if (count == 1) {
             return true;
         }

@@ -1,9 +1,11 @@
 package com.xupt.mall.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import com.xupt.mall.service.OrderDetailService;
+import com.xupt.mall.util.OrderInfoSearch;
+import com.xupt.mall.util.Result;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -14,8 +16,20 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2020-05-25
  */
 @RestController
-@RequestMapping("/mall/order-detail")
+@RequestMapping("/mall/order/detail")
 public class OrderDetailController {
+
+
+    @Autowired
+    private OrderDetailService  orderDetailService;
+
+    @GetMapping("list")
+    public Result list(){
+        return Result.ok().data("orderDetail",orderDetailService.list(null));
+    }
+
+    //getPageList
+
 
 }
 

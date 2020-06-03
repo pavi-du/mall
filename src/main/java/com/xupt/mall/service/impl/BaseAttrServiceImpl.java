@@ -39,7 +39,7 @@ public class BaseAttrServiceImpl extends ServiceImpl<BaseAttrMapper, BaseAttr> i
                 List<BaseAttrValueVO> tempBaseAttrValueList = new ArrayList<>();
                 for (BaseAttrValue baseAttrValue : baseAttrValueList) {
                     //System.out.println(baseAttrValue.getBaseAttrId()+"---"+baseAttr.getId());
-                    if(baseAttrValue.getBaseAttrId().equals(String.valueOf(baseAttr.getId()))){
+                    if(String.valueOf(baseAttrValue.getBaseAttrId()).equals(String.valueOf(baseAttr.getId()))){
 
                         BaseAttrValueVO baseAttrValueVO = new BaseAttrValueVO();
                         BeanUtils.copyProperties(baseAttrValue,baseAttrValueVO);

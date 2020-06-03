@@ -1,14 +1,19 @@
 package com.xupt.mall.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+
+import java.time.LocalDate;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * <p>
@@ -33,7 +38,7 @@ public class OrderInfo implements Serializable {
     private String totalAmount;
 
     @TableField("USER_ID")
-    private String userId;
+    private Integer userId;
 
     @TableField("ORDER_STATUS")
     private String orderStatus;
@@ -41,14 +46,28 @@ public class OrderInfo implements Serializable {
     @TableField("ADDRESS")
     private String address;
 
-    @TableField("CREAET_TIME")
-    private Date creaetTime;
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd",timezone = "GMT+8")
+    @TableField("CREATE_TIME")
+    private LocalDate createTime;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd",timezone = "GMT+8")
     @TableField("EXPIRE_TIME")
-    private Date expireTime;
+    private LocalDate expireTime;
 
     @TableField("IMG_URL")
     private String imgUrl;
+
+    @TableField(exist = false)
+    private String nickName;
+
+    @TableField(exist = false)
+    private String skuName;
+
+    @TableField(exist = false)
+    private Integer skuCount;
+
+    @TableField(exist = false)
+    private Integer skuId;
 
 
 }

@@ -33,13 +33,13 @@ public class SkuInfo implements Serializable {
     private String skuName;
 
     @TableField("SKU_PRICE")
-    private String skuPrice;
+    private Integer skuPrice;
 
     @TableField("SKU_COUNT")
-    private String skuCount;
+    private Integer skuCount;
 
     @TableField("CATALOG_ID")
-    private String catalogId;
+    private Integer catalogId;
 
     @TableField("SKU_IMG")
     private String skuImg;

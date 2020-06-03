@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2020-05-28
  */
 @RestController
-@RequestMapping("/mall/spu-sale-attr")
+@RequestMapping("/spuSaleAttr")
 public class SpuSaleAttrController {
 
 }

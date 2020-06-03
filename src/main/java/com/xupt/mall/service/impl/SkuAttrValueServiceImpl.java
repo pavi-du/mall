@@ -25,17 +25,17 @@ public class SkuAttrValueServiceImpl extends ServiceImpl<SkuAttrValueMapper, Sku
 
 
     @Override
-    public Boolean saveAttrValueList(List<String> baseAttrIdList, List<BaseAttr> baseAttrList, Integer skuInfoId) {
+    public Boolean saveAttrValueList(List<Integer> baseAttrIdList, List<BaseAttr> baseAttrList, Integer skuInfoId) {
 
-        for (String baseAttrId : baseAttrIdList) {
+        for (Integer baseAttrId : baseAttrIdList) {
             for (BaseAttr baseAttr : baseAttrList) {
                 if (String.valueOf(baseAttr.getId()).equals(baseAttrId)){
                     List<BaseAttrValueVO> baseAttrValueList = baseAttr.getBaseAttrValueList();
                     for (BaseAttrValueVO baseAttrValueVO : baseAttrValueList) {
                         SkuAttrValue skuAttrValue = new SkuAttrValue();
-                        skuAttrValue.setSkuId(String.valueOf(skuInfoId));
+                        skuAttrValue.setSkuId(skuInfoId);
                         skuAttrValue.setBaseAttrId(baseAttrId);
-                        skuAttrValue.setBaseAttrValueId(String.valueOf(baseAttrValueVO.getId()));
+                        skuAttrValue.setBaseAttrValueId(baseAttrValueVO.getId());
                         int insert = baseMapper.insert(skuAttrValue);
                         if(insert != 1){
                             return false;

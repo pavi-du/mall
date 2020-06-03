@@ -33,7 +33,7 @@ public class BaseAttrValue implements Serializable {
     private String baseAttrValue;
 
     @TableField("BASE_ATTR_ID")
-    private String baseAttrId;
+    private Integer baseAttrId;
 
 
 }

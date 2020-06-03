@@ -7,6 +7,8 @@ import com.xupt.mall.util.SkuInfoSearch;
 import com.xupt.mall.util.UserInfoSearch;
 import com.xupt.mall.vo.UploadSkuInfo;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -28,9 +30,11 @@ public interface SkuInfoService extends IService<SkuInfo> {
 
     void pageSearch(Page<SkuInfo> skuInfoPage, SkuInfoSearch skuInfoSearch);
 
-    SkuInfo getSkuInfoById(String id);
+    SkuInfo getSkuInfoById(Integer id);
 
     Boolean updateSkuInfo(SkuInfo skuInfo);
 
-    Boolean deleteSkuInfoById(String id);
+    Boolean deleteSkuInfoById(Integer id);
+
+    List<SkuInfo> getSkuInfoByCatalogId(Integer catalogId);
 }

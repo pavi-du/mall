@@ -58,7 +58,7 @@ public class SkuInfoController {
     @PostMapping("manage/{page}/{limit}")
     public Result getPageList(@PathVariable(name = "page") Long page,
                               @PathVariable(name = "limit") Long limit,
-                              @RequestBody SkuInfoSearch skuInfoSearch){
+                              @RequestBody(required = false) SkuInfoSearch skuInfoSearch){
 
         Page<SkuInfo> skuInfoPage = new Page<>(page,limit);
         skuInfoService.pageSearch(skuInfoPage,skuInfoSearch);
@@ -73,14 +73,14 @@ public class SkuInfoController {
     }
 
     @GetMapping("manage/{id}")
-    public Result getSkuInfoById(@PathVariable String id){
+    public Result getSkuInfoById(@PathVariable Integer id){
 
         SkuInfo skuInfo = skuInfoService.getSkuInfoById(id);
         return Result.ok().data("skuInfo",skuInfo);
     }
 
     @PutMapping("manage/{id}")
-    public Result updateSkuInfo(@PathVariable String id,
+    public Result updateSkuInfo(@PathVariable Integer id,
                                 @RequestBody SkuInfo skuInfo){
 
         //skuInfo.setId(Integer.parseInt(id));
@@ -92,12 +92,22 @@ public class SkuInfoController {
     }
 
     @DeleteMapping("manage/{id}")
-    public Result deleteSkuInfoById(@PathVariable String id){
+    public Result deleteSkuInfoById(@PathVariable Integer id){
 
         //skuInfo.setId(Integer.parseInt(id));
         Boolean delete = skuInfoService.deleteSkuInfoById(id);
         if(delete){
             return Result.ok();
+        }
+        return Result.error();
+    }
+
+    @GetMapping("{catalogId}")
+    public Result getSkuInfoByCatalogId(@PathVariable(name = "catalogId") Integer catalogId){
+        List<SkuInfo> skuInfoList = skuInfoService.getSkuInfoByCatalogId(catalogId);
+
+        if(skuInfoList != null && skuInfoList.size() > 0){
+            return Result.ok().data("skuInfoList",skuInfoList);
         }
         return Result.error();
     }

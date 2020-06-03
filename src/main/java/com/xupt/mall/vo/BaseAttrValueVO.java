@@ -16,6 +16,6 @@ public class BaseAttrValueVO {
 
     private String baseAttrName;
 
-    private String baseAttrId;
+    private Integer baseAttrId;
 
 }

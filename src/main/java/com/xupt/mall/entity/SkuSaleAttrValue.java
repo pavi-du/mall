@@ -30,10 +30,10 @@ public class SkuSaleAttrValue implements Serializable {
     private Integer id;
 
     @TableField("BASE_ATTR_ID")
-    private String baseAttrId;
+    private Integer baseAttrId;
 
     @TableField("BASE_ATTR_VALUE_ID")
-    private String baseAttrValueId;
+    private Integer baseAttrValueId;
 
     @TableField("BASE_ATTR_NAME")
     private String baseAttrName;
@@ -42,7 +42,7 @@ public class SkuSaleAttrValue implements Serializable {
     private String baseAttrValue;
 
     @TableField("SKU_ID")
-    private String skuId;
+    private Integer skuId;
 
 
 }

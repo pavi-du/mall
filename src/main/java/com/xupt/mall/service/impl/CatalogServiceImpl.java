@@ -43,17 +43,17 @@ public class CatalogServiceImpl extends ServiceImpl<CatalogMapper, Catalog> impl
     }
 
     @Override
-    public Catalog getCatalogById(String id) {
+    public Catalog getCatalogById(Integer id) {
         Catalog catalogTemp = new Catalog();
-        catalogTemp.setId(Integer.parseInt(id));
+        catalogTemp.setId(id);
         Catalog catalog = baseMapper.selectById(catalogTemp);
         return catalog;
     }
 
     @Override
-    public boolean deleteCatalogById(String id) {
+    public boolean deleteCatalogById(Integer id) {
         Catalog catalog = new Catalog();
-        catalog.setId(Integer.parseInt(id));
+        catalog.setId(id);
         int count = baseMapper.deleteById(catalog);
         if(count == 1){
             return true;

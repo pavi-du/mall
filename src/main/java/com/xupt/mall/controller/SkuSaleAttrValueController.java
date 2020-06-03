@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2020-05-25
  */
 @RestController
-@RequestMapping("/mall/sku-sale-attr-value")
+@RequestMapping("/skuSaleAttrValue")
 public class SkuSaleAttrValueController {
 
 }

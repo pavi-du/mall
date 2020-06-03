@@ -44,14 +44,14 @@ public class CatalogController {
 
 
     @GetMapping("manage/{id}")
-    public Result getCatalogById(@PathVariable(name = "id")String id){
+    public Result getCatalogById(@PathVariable(name = "id")Integer id){
 
         Catalog catalog = catalogService.getCatalogById(id);
         return Result.ok().data("catalog",catalog);
     }
 
     @DeleteMapping("manage/{id}")
-    public Result deleteCatalogById(@PathVariable(name = "id")String id){
+    public Result deleteCatalogById(@PathVariable(name = "id")Integer id){
 
         boolean flag = catalogService.deleteCatalogById(id);
 
@@ -63,11 +63,11 @@ public class CatalogController {
 
 
     @PutMapping("manage/{id}")
-    public Result updateCatalog(@PathVariable(name = "id") String id,
+    public Result updateCatalog(@PathVariable(name = "id") Integer id,
                                  @RequestBody Catalog catalog){
 
 
-        catalog.setId(Integer.parseInt(id));
+        catalog.setId(id);
         boolean flag = catalogService.updateCatalog(catalog);
 
         if(flag){
@@ -84,6 +84,12 @@ public class CatalogController {
             return Result.ok();
         }
         return Result.error();
+    }
+
+    @GetMapping("list")
+    public Result listCatalog(){
+        List<Catalog> list = catalogService.list(null);
+        return Result.ok().data("catalogList",list);
     }
 
 

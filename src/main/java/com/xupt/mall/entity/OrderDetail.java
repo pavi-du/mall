@@ -30,7 +30,7 @@ public class OrderDetail implements Serializable {
     private Integer id;
 
     @TableField("SKU_ID")
-    private String skuId;
+    private Integer skuId;
 
     @TableField("SKU_NAME")
     private String skuName;
@@ -41,8 +41,8 @@ public class OrderDetail implements Serializable {
     @TableField("ORDER_ID")
     private Integer orderId;
 
-    @TableField("SKU_NUME")
-    private Integer skuNume;
+    @TableField("SKU_NUM")
+    private Integer skuNum;
 
 
 }

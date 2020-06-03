@@ -19,9 +19,9 @@ public interface CatalogService extends IService<Catalog> {
 
     void pageSearch(Page<Catalog> catalogPage, CatalogSearch catalogSearch);
 
-    Catalog getCatalogById(String id);
+    Catalog getCatalogById(Integer id);
 
-    boolean deleteCatalogById(String id);
+    boolean deleteCatalogById(Integer id);
 
     boolean updateCatalog(Catalog catalog);
 

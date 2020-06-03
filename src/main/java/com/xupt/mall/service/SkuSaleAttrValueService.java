@@ -16,5 +16,5 @@ import java.util.List;
  */
 public interface SkuSaleAttrValueService extends IService<SkuSaleAttrValue> {
 
-    Boolean saveSaleAttrValueList(List<String> baseAttrIdList, List<BaseAttr> baseAttrList, Integer skuInfoId);
+    Boolean saveSaleAttrValueList(List<Integer> baseAttrIdList, List<BaseAttr> baseAttrList, Integer skuInfoId);
 }

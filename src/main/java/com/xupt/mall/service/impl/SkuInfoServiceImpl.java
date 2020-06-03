@@ -59,8 +59,8 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoMapper, SkuInfo> impl
     @Override
     public Boolean saveUploadSkuInfo(UploadSkuInfo uploadSkuInfo) {
 
-        List<String> catalogIdList = uploadSkuInfo.getCatalogIdList();
-        for (String catalogId : catalogIdList) {
+        List<Integer> catalogIdList = uploadSkuInfo.getCatalogIdList();
+        for (Integer catalogId : catalogIdList) {
             SkuInfo skuInfo = new SkuInfo();
             skuInfo.setCatalogId(catalogId);
             BeanUtils.copyProperties(uploadSkuInfo, skuInfo);
@@ -71,7 +71,7 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoMapper, SkuInfo> impl
 
             List<BaseAttr> baseAttrList = uploadSkuInfo.getBaseAttrList();
 
-            List<String> baseAttrIdList = uploadSkuInfo.getBaseAttrIdList();
+            List<Integer> baseAttrIdList = uploadSkuInfo.getBaseAttrIdList();
             Boolean saleAttr = skuAttrValueService.saveAttrValueList(baseAttrIdList, baseAttrList, skuInfoId);
             Boolean saleAttrValue = skuSaleAttrValueService.saveSaleAttrValueList(baseAttrIdList, baseAttrList, skuInfoId);
             if (!saleAttr || !saleAttrValue) {
@@ -101,7 +101,7 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoMapper, SkuInfo> impl
     }
 
     @Override
-    public SkuInfo getSkuInfoById(String id) {
+    public SkuInfo getSkuInfoById(Integer id) {
 
         SkuInfo skuInfo = baseMapper.selectById(id);
 
@@ -118,11 +118,22 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoMapper, SkuInfo> impl
     }
 
     @Override
-    public Boolean deleteSkuInfoById(String id) {
-        int delete = baseMapper.deleteById(Integer.parseInt(id));
+    public Boolean deleteSkuInfoById(Integer id) {
+        int delete = baseMapper.deleteById(id);
         if(delete == 1){
             return true;
         }
         return false;
+    }
+
+    @Override
+    public List<SkuInfo> getSkuInfoByCatalogId(Integer catalogId) {
+
+        QueryWrapper<SkuInfo> skuInfoQueryWrapper = new QueryWrapper<>();
+        skuInfoQueryWrapper.eq("CATALOG_ID", catalogId);
+
+        List<SkuInfo> skuInfoList = baseMapper.selectList(skuInfoQueryWrapper);
+
+        return skuInfoList;
     }
 }

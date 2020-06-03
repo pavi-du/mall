@@ -17,4 +17,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class OrderDetailServiceImpl extends ServiceImpl<OrderDetailMapper, OrderDetail> implements OrderDetailService {
 
+    @Override
+    public Boolean saveOrderDetail(OrderDetail orderDetail) {
+
+        int insert = baseMapper.insert(orderDetail);
+        if(insert == 1){
+            return true;
+        }
+        return false;
+    }
 }

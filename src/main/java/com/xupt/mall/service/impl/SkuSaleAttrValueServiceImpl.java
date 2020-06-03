@@ -23,21 +23,21 @@ import java.util.List;
 public class SkuSaleAttrValueServiceImpl extends ServiceImpl<SkuSaleAttrValueMapper, SkuSaleAttrValue> implements SkuSaleAttrValueService {
 
     @Override
-    public Boolean saveSaleAttrValueList(List<String> baseAttrIdList, List<BaseAttr> baseAttrList, Integer skuInfoId) {
-        for (String baseAttrId : baseAttrIdList) {
+    public Boolean saveSaleAttrValueList(List<Integer> baseAttrIdList, List<BaseAttr> baseAttrList, Integer skuInfoId) {
+        for (Integer baseAttrId : baseAttrIdList) {
             for (BaseAttr baseAttr : baseAttrList) {
                 if (String.valueOf(baseAttr.getId()).equals(baseAttrId)){
                     List<BaseAttrValueVO> baseAttrValueList = baseAttr.getBaseAttrValueList();
                     for (BaseAttrValueVO baseAttrValueVO : baseAttrValueList) {
                         SkuSaleAttrValue skuSaleAttrValue = new SkuSaleAttrValue();
-                        skuSaleAttrValue.setSkuId(String.valueOf(skuInfoId));
+                        skuSaleAttrValue.setSkuId(skuInfoId);
                         skuSaleAttrValue.setBaseAttrId(baseAttrId);
 
                         skuSaleAttrValue.setBaseAttrName(baseAttr.getBaseAttrName());
                         skuSaleAttrValue.setBaseAttrValue(baseAttrValueVO.getBaseAttrName());
 
 
-                        skuSaleAttrValue.setBaseAttrValueId(String.valueOf(baseAttrValueVO.getId()));
+                        skuSaleAttrValue.setBaseAttrValueId(baseAttrValueVO.getId());
                         int insert = baseMapper.insert(skuSaleAttrValue);
                         if(insert != 1){
                             return false;

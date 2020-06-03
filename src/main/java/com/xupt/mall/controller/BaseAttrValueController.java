@@ -37,7 +37,7 @@ public class BaseAttrValueController {
     }
 
     @DeleteMapping("{id}")
-    public Result deleteBaseAttrValue(@PathVariable(name = "id")String id){
+    public Result deleteBaseAttrValue(@PathVariable(name = "id")Integer id){
 
         Boolean deleteFlag = baseAttrValueService.deleteBaseAttrValue(id);
         if(deleteFlag){

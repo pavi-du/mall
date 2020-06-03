@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.models.auth.In;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -30,19 +31,22 @@ public class Cart implements Serializable {
     private Integer id;
 
     @TableField("CART_PRICE")
-    private String cartPrice;
+    private Integer cartPrice;
 
     @TableField("SKU_COUNT")
-    private String skuCount;
+    private Integer skuCount;
 
     @TableField("SKU_NAME")
     private String skuName;
 
     @TableField("USER_ID")
-    private String userId;
+    private Integer userId;
 
     @TableField("CART_IMG")
     private String cartImg;
+
+    @TableField("SKU_ID")
+    private Integer skuId;
 
 
 }

@@ -26,6 +26,6 @@ public interface BaseAttrValueService extends IService<BaseAttrValue> {
      */
     Boolean addBaseAttrValue(BaseAttrValueVO baseAttrValueVO);
 
-    Boolean deleteBaseAttrValue(String id);
+    Boolean deleteBaseAttrValue(Integer id);
 
 }
