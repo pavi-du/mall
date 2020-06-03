@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<!--<html lang="zh-CN">-->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>mall</title>
+
+    <!-- Bootstrap -->
+    <link href="/css/bootstrap.css" rel="stylesheet">
+    <link href="/css/messenger.css" rel="stylesheet">
+    <!--<link href="/css/messenger-theme-future.css" rel="stylesheet">-->
+    <link href="/css/messenger-theme-ice.css" rel="stylesheet">
+    <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
+    <!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+    <style type="text/css">
+        * {
+            font-size: 16px;
+        }
+
+        ul {
+            font-size: 18px;
+            list-style-type: none;
+
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="row">
+    <div class="col-md-6">
+
+    </div>
+    <div class="col-md-2">
+        <a href="/user/toLogin" th:if="${session.userInfo}==null">请登录注册</a>
+    </div>
+    <div class="col-md-2">
+        <p th:text="${session.userInfo}!=null?'用户名：'+${session.userInfo.nickName}:''"></p>
+    </div>
+    <div class="col-md-1">
+        <a href="/user/toUpdatePasswd" th:text="${session.userInfo}!=null?'修改密码':''"></a>
+
+    </div>
+    <div class="col-md-1">
+        <a href="/user/logout" th:if="${session.userInfo}!=null">退出登录</a>
+
+    </div>
+</div>
+<input type="hidden" th:value="${session.userInfo}!=null?${session.userInfo.id}:''"/>
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-7">
+        <div class="input-group">
+            <input type="text" class="form-control" id="skuNameSearchInput" placeholder="请输入商品名称">
+            <span class="input-group-btn">
+                <button class="btn btn-default btn-info" id="skuNameSearchButton" type="button">搜索</button>
+                <button class="btn btn-default btn-danger" id="skuNameClearButton" type="button">清空</button>
+            </span>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <button type="button" id="viewCart" class="btn btn-primary glyphicon glyphicon-arrow-right">查看购物车</button>
+    </div>
+</div>
+<div>
+    <div class="col-md-12">
+        <hr>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-2">
+        <div class="list-group" id="catalog">
+        </div>
+    </div>
+    <div class="col-md-9">
+        <table class="table table-hover">
+            <tr>
+                <th>名字</th>
+                <th>价格</th>
+                <th>个数</th>
+                <th>描述</th>
+                <th>操作</th>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+<script src="/js/jquery-3.1.0.min.js"></script>
+<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/messenger.js"></script>
+<script src="/js/messenger-theme-future.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $._messengerDefaults = {
+            extraClasses: 'messenger-fixed messenger-theme-ice messenger-on-top',
+            maxMessages: 1
+        }
+
+
+        // 搜索框
+        $("#skuNameSearchButton").bind("click", function () {
+            var skuName = $("#skuNameSearchInput").val();
+
+            // $.globalMessenger().post({
+            //     hideAfter: 2,
+            //     message: "操作成功",//提示信息
+            //     type: 'info',//消息类型。error、info、success
+            //     showCloseButton: true,//是否显示关闭按钮
+            //     hideOnNavigate: true //是否隐藏导航
+            // });
+
+
+            var req = '{"skuName":"' + skuName +'"}';
+
+            $.ajax({
+                type: "POST",
+                url: "/skuInfo/manage/1/100",
+                data: req,
+                contentType: 'application/json;charset=UTF-8',
+                success: function (res) {
+                    if (res.success === true) {
+                        var skuInfoList = res.data.skuInfoList;
+                        initskuInfoList(skuInfoList);
+                    }
+                }
+            });
+
+
+        });
+
+        $("#skuNameClearButton").bind("click", function () {
+            $("#skuNameSearchInput").val('');
+
+            var req = '{"skuName":"' + '' +'"}';
+
+            $.ajax({
+                type: "POST",
+                url: "/skuInfo/manage/1/100",
+                data: req,
+                contentType: 'application/json;charset=UTF-8',
+                success: function (res) {
+                    if (res.success === true) {
+                        var skuInfoList = res.data.skuInfoList;
+                        initskuInfoList(skuInfoList);
+                    }
+                }
+            });
+        });
+
+        $("#viewCart").bind("click", function () {
+            window.location = "/cart/toCart";
+        });
+
+
+        $.ajax({
+            type: "POST",
+            url: "/skuInfo/manage/1/100",
+            success: function (res) {
+                if (res.success === true) {
+                    var skuInfoList = res.data.skuInfoList;
+                    initskuInfoList(skuInfoList);
+                }
+            }
+        });
+
+        $.ajax({
+            type: "GET",
+            url: "/catalog/list",
+            success: function (res) {
+                var catalogList = res.data.catalogList;
+                console.log(catalogList);
+                $.each(catalogList, function (i, n) {
+                    //alert("Item #" + i + ": " + n.catalogName);
+                    //<button type="button" class="list-group-item">Cras justo odio</button>
+                    var button = '<button style="text-align:center" type="button" class="list-group-item" catalogId="'
+                        + n.id + '">' + n.catalogName + '</td>';
+                    //var li = '<li id="' + n.id + '" >' + n.catalogName + '</li>';
+                    $("#catalog").append(button);
+
+                });
+                $('#catalog button').bind('click', function () {
+                    //$("table tr").remove($(".content"));
+                    $.ajax({
+                        type: "GET",
+                        url: "/skuInfo/" + $(this).attr("catalogId"),
+                        success: function (res) {
+                            if (res.success === true) {
+                                $("table .content").remove();
+                                var skuInfoList = res.data.skuInfoList;
+                                console.log(res.data.skuInfoList);
+                                initskuInfoList(skuInfoList);
+                                // $.each(skuInfoList, function (i, n) {
+                                //     var tr = '<tr class="content"></tr>';
+                                //     var skuNameTd = "<td>" + n.skuName + "</td>";
+                                //     var skuPriceTd = "<td>" + n.skuPrice + "</td>";
+                                //     var skuCountTd = "<td>" + n.skuCount + "</td>";
+                                //     var skuDescTd = "<td>" + n.skuDesc + "</td>";
+                                //     //
+                                //     var addToCartTd = '<td skuId="' + n.id + '">'
+                                //         + '<button type="button" class="btn btn-info addToCart">添加购物车</button>'
+                                //         + '</td>';
+                                //     $(tr).append(skuNameTd).append(skuPriceTd)
+                                //         .append(skuCountTd).append(skuDescTd).append(addToCartTd)
+                                //         .appendTo($("table"));
+                                //
+                                // });
+                                //
+                                // $(".addToCart").bind("click", function () {
+                                //     console.log($(this).parent("td").attr("skuId"));
+                                //     var skuId = $(this).parent("td").attr("skuId");
+                                //     $.ajax({
+                                //         type: "POST",
+                                //         url: "/mall/cart/addToCart/" + skuId,
+                                //         success: function (res) {
+                                //             $.globalMessenger().post({
+                                //                 hideAfter: 1,
+                                //                 message: "添加购物车成功",//提示信息
+                                //                 type: 'success',//消息类型。error、info、success
+                                //                 showCloseButton:true,//是否显示关闭按钮
+                                //                 hideOnNavigate: true //是否隐藏导航
+                                //             });
+                                //         }
+                                //     });
+                                // });
+
+                            } else {
+                                $("table .content").remove();
+                            }
+                        }
+                    });
+                });
+
+            }
+        });
+
+        function initskuInfoList(skuInfoList) {
+            $("table .content").remove();
+            $.each(skuInfoList, function (i, n) {
+                var tr = '<tr class="content"></tr>';
+                var skuNameTd = "<td>" + n.skuName + "</td>";
+                var skuPriceTd = "<td>" + n.skuPrice + "</td>";
+                var skuCountTd = "<td>" + n.skuCount + "</td>";
+                var skuDescTd = "<td>" + n.skuDesc + "</td>";
+                //
+                var addToCartTd = '<td skuId="' + n.id + '">'
+                    + '<button type="button" class="btn btn-info addToCart">添加购物车</button>'
+                    + '</td>';
+                $(tr).append(skuNameTd).append(skuPriceTd)
+                    .append(skuCountTd).append(skuDescTd).append(addToCartTd)
+                    .appendTo($("table"));
+
+            });
+
+            $(".addToCart").bind("click", function () {
+                console.log($(this).parent("td").attr("skuId"));
+                var skuId = $(this).parent("td").attr("skuId");
+                $.ajax({
+                    type: "POST",
+                    url: "/cart/addToCart/" + skuId,
+                    success: function (res) {
+                        $.globalMessenger().post({
+                            hideAfter: 1,
+                            message: "添加购物车成功",//提示信息
+                            type: 'success',//消息类型。error、info、success
+                            showCloseButton: true,//是否显示关闭按钮
+                            hideOnNavigate: true //是否隐藏导航
+                        });
+                    }
+                });
+            });
+        }
+
+    });
+</script>
+</body>
+
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>登录</title>
+
+    <!-- Bootstrap -->
+    <link href="/css/bootstrap.css" rel="stylesheet">
+    <link href="/css/messenger.css" rel="stylesheet">
+    <!--<link href="/css/messenger-theme-future.css" rel="stylesheet">-->
+    <link href="/css/messenger-theme-ice.css" rel="stylesheet">
+
+    <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
+    <!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+    <style type="text/css">
+        * {
+            font-size: 16px;
+        }
+
+        ul {
+            font-size: 18px;
+            list-style-type: none;
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="row">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-8">
+            <div class="page-header">
+                <h1>登录<small>...</small></h1>
+            </div>
+        </div>
+
+
+        <div class="row">
+
+            <div class="col-md-12">
+                <form class="form-horizontal" >
+                    <div class="form-group">
+                        <label for="loginName" class="col-md-2 control-label">登录名</label>
+                        <div class="col-md-4">
+                            <input type="text" name="loginName" class="form-control" id="loginName" placeholder="请输入登录名">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="passwd" class="col-md-2 control-label">密码</label>
+                        <div class="col-md-4">
+                            <input type="password" name="password" class="form-control" id="passwd" placeholder="请输入密码">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-1">
+                            <button type="submit" id="regist" class="btn btn-default">注册</button>
+                        </div>
+                        <div class="col-md-1">
+                            <button type="submit" id="login" class="btn btn-info">登录</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+    </div>
+
+
+    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+    <script src="/js/jquery-3.1.0.min.js"></script>
+    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/messenger.js"></script>
+    <script src="/js/messenger-theme-future.js"></script>
+   
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $._messengerDefaults = {
+                extraClasses: 'messenger-fixed messenger-theme-ice messenger-on-left',
+                maxMessages: 1
+            }
+
+
+            $("#regist").bind("click", function (){
+                window.location = "/user/toRegist";
+                return false;
+            });
+
+
+            $("#login").bind("click", function () {
+                var loginName = $("#loginName").val();
+                var passwd = $("#passwd").val();
+                console.log(loginName + passwd);
+
+                // 'loginName='+loginName+'&passwd='+passwd,
+                var req = '{"loginName":"' + loginName + '","passwd":"' + passwd + '"}';
+                $.ajax({
+                    url: "/user/front/login",
+                    type: "POST",
+                    data: req,
+                    contentType: 'application/json;charset=UTF-8',
+                    success: function (res) {
+                        if (res.success == true) {
+
+
+                            // $.globalMessenger().post({
+                            //     hideAfter: 3,
+                            //     message: "登录成功",//提示信息
+                            //     type: 'info',//消息类型。error、info、success
+                            //     showCloseButton:true,//是否显示关闭按钮
+                            //     hideOnNavigate: true //是否隐藏导航
+                            // });
+
+                             window.location = "/index"
+                        } else {
+                            $.globalMessenger().post({
+                                hideAfter: 2,
+                                message: "用户不存在或者密码不匹配",//提示信息
+                                type: 'error',//消息类型。error、info、success
+                                showCloseButton:true,//是否显示关闭按钮
+                                hideOnNavigate: true //是否隐藏导航
+                            });
+                        }
+                    }
+                });
+                return false;
+            });
+
+        });
+    </script>
+</body>
+
+</html>
