@@ -23,14 +23,14 @@ import java.util.List;
  */
 @CrossOrigin
 @RestController
-@RequestMapping("/mall/attr")
+@RequestMapping("/attr")
 public class BaseAttrController {
 
 
     @Autowired
     private BaseAttrService baseAttrService;
 
-    @GetMapping("list")
+    @GetMapping("manage/list")
     public Result listBaseAttr(){
 
         List<BaseAttr> baseAttrList = baseAttrService.listBaseAttr();

@@ -35,7 +35,7 @@ public class OrderInfoController {
     private UserInfoService userInfoService;
 
 
-    @PostMapping("/mall/order/manage/{page}/{limit}")
+    @PostMapping("/order/manage/{page}/{limit}")
     @ResponseBody
     public Result getPageList(@PathVariable(name = "page") Long page,
                               @PathVariable(name = "limit") Long limit,
@@ -50,6 +50,10 @@ public class OrderInfoController {
         for (OrderInfo orderInfo : orderInfoList) {
             Integer userId = orderInfo.getUserId();
             UserInfo userInfo = userInfoService.getUserInfoById(userId);
+            if(userInfo == null){
+                //orderInfoList.remove(orderInfo);
+                continue;
+            }
             orderInfo.setNickName(userInfo.getNickName());
 
         }
@@ -58,7 +62,7 @@ public class OrderInfoController {
     }
 
     //deleteOrderInfoById
-    @DeleteMapping("/mall/order/manage/{id}")
+    @DeleteMapping("/order/manage/{id}")
     @ResponseBody
     public Result deleteOrderInfoById(@PathVariable(name = "id") String id) {
         Boolean deleteFlag = orderInfoService.deleteOrderInfoById(id);
@@ -68,7 +72,7 @@ public class OrderInfoController {
         return Result.error();
     }
 
-    @GetMapping("/mall/order/manage/{id}")
+    @GetMapping("/order/manage/{id}")
     @ResponseBody
     public Result getOrderInfoById(@PathVariable(name = "id") String id) {
 
@@ -76,7 +80,7 @@ public class OrderInfoController {
         return Result.ok().data("orderInfo", orderInfo);
     }
 
-    @PutMapping("/mall/order/manage/{id}")
+    @PutMapping("/order/manage/{id}")
     @ResponseBody
     public Result updateOrderInfo(@PathVariable(name = "id") String id,
                                   @RequestBody OrderInfo orderInfo) {

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @CrossOrigin
 @RestController
-@RequestMapping("/mall/attr/value")
+@RequestMapping("/attr/value")
 public class BaseAttrValueController {
 
 
@@ -25,7 +25,7 @@ public class BaseAttrValueController {
     private BaseAttrValueService baseAttrValueService;
 
 
-    @PostMapping("add")
+    @PostMapping("manage/add")
     public Result addBaseAttrValue(@RequestBody BaseAttrValueVO baseAttrValueVO){
 
         Boolean addFlag = baseAttrValueService.addBaseAttrValue(baseAttrValueVO);
@@ -36,7 +36,7 @@ public class BaseAttrValueController {
         return Result.error();
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("manage/{id}")
     public Result deleteBaseAttrValue(@PathVariable(name = "id")Integer id){
 
         Boolean deleteFlag = baseAttrValueService.deleteBaseAttrValue(id);
