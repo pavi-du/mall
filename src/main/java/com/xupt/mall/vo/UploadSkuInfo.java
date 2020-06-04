@@ -21,9 +21,9 @@ public class UploadSkuInfo {
 
     private String skuName;
 
-    private String skuPrice;
+    private Integer skuPrice;
 
-    private String skuCount;
+    private Integer skuCount;
 
     private List<Integer> catalogIdList = new ArrayList<>();
 
