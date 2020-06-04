@@ -52,7 +52,7 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoMapper, SkuInfo> impl
         UploadSkuInfo uploadSkuInfo = new UploadSkuInfo();
         uploadSkuInfo.setCatalogLit(catalogList);
         uploadSkuInfo.setBaseAttrList(baseAttrList);
-        uploadSkuInfo.setSkuCount(String.valueOf(100));
+        uploadSkuInfo.setSkuCount(100);
         return uploadSkuInfo;
     }
 

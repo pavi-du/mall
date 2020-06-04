@@ -43,4 +43,6 @@ public interface UserInfoService extends IService<UserInfo> {
     Boolean deleteCookie(HttpServletRequest request, HttpServletResponse response, HttpSession session);
 
     boolean updateUserPasswd(UserInfo userInfo);
+
+    Integer getUserId(HttpSession session);
 }

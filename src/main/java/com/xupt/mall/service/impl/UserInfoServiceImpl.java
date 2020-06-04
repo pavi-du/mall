@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xupt.mall.entity.UserInfo;
 import com.xupt.mall.mapper.UserInfoMapper;
+import com.xupt.mall.service.OrderInfoService;
 import com.xupt.mall.service.UserInfoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xupt.mall.util.CookieUtil;
@@ -32,6 +33,9 @@ import java.util.List;
 @Service
 public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> implements UserInfoService {
 
+
+    @Autowired
+    private OrderInfoService orderInfoService;
 
     @Override
     public void pageSearch(Page<UserInfo> userInfoPage, UserInfoSearch userInfoSearch) {
@@ -65,6 +69,7 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         UserInfo user = new UserInfo();
         user.setId(id);
         int count = baseMapper.deleteById(user);
+        Boolean delete = orderInfoService.deleteOrderInfoByUserId(id);
         if(count == 1){
             return true;
         }
@@ -165,5 +170,16 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         user.setPasswd(mPasswd);
         boolean updateUserInfo = updateUserInfo(user);
         return updateUserInfo;
+    }
+
+    @Override
+    public Integer getUserId(HttpSession session) {
+        UserInfo userInfo = (UserInfo) session.getAttribute("userInfo");
+        Integer userId ;
+        if(userInfo != null) {
+            userId = userInfo.getId();
+            return userId;
+        }
+        return -1;
     }
 }

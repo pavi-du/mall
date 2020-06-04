@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.xupt.mall.entity.UserInfo;
 import com.xupt.mall.util.OrderInfoSearch;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -34,4 +36,8 @@ public interface OrderInfoService extends IService<OrderInfo> {
     Boolean buy(OrderInfo orderInfo, UserInfo userInfo);
 
     Boolean varifySkuCount(Integer skuId, Integer skuCount);
+
+    List<OrderInfo> listOrderInfoByUserId(Integer userId);
+
+    Boolean deleteOrderInfoByUserId(Integer id);
 }

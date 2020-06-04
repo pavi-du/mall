@@ -2,6 +2,10 @@ package com.xupt.mall.service;
 
 import com.xupt.mall.entity.OrderDetail;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.xupt.mall.entity.OrderInfo;
+import com.xupt.mall.vo.OrderResVo;
+
+import java.util.List;
 
 /**
  * <p>
@@ -14,4 +18,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface OrderDetailService extends IService<OrderDetail> {
 
     Boolean saveOrderDetail(OrderDetail orderDetail);
+
+    List<OrderResVo> listOrderDetail(Integer userId);
+
+    Boolean deleteByOrderId(List<OrderInfo> orderInfoList);
 }

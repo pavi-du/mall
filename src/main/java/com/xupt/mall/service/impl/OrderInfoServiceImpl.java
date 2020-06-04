@@ -1,6 +1,7 @@
 package com.xupt.mall.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xupt.mall.entity.*;
 import com.xupt.mall.mapper.OrderInfoMapper;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -141,5 +143,34 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
         }
 
         return false;
+    }
+
+    @Override
+    public List<OrderInfo> listOrderInfoByUserId(Integer userId) {
+
+        QueryWrapper<OrderInfo> orderInfoQueryWrapper = new QueryWrapper<>();
+        orderInfoQueryWrapper.eq("USER_ID", userId);
+
+        List<OrderInfo> orderInfoList = baseMapper.selectList(orderInfoQueryWrapper);
+
+        return orderInfoList;
+    }
+
+    @Override
+    public Boolean deleteOrderInfoByUserId(Integer id) {
+
+        UpdateWrapper<OrderInfo> orderInfoUpdateWrapper = new UpdateWrapper<>();
+        QueryWrapper<OrderInfo> orderInfoQueryWrapper = new QueryWrapper<>();
+
+        orderInfoQueryWrapper.eq("USER_ID",id);
+        orderInfoUpdateWrapper.eq("USER_ID",id);
+
+        List<OrderInfo> orderInfoList = baseMapper.selectList(orderInfoQueryWrapper);
+
+        Boolean deleteOrderDetail = orderDetailService.deleteByOrderId(orderInfoList);
+
+        int delete = baseMapper.delete(orderInfoUpdateWrapper);
+
+        return true;
     }
 }
