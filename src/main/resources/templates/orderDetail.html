@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<!--<html lang="zh-CN">-->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>cart</title>
+
+    <!-- Bootstrap -->
+    <link href="/css/bootstrap.css" rel="stylesheet">
+    <link href="/css/messenger.css" rel="stylesheet">
+    <!--<link href="/css/messenger-theme-future.css" rel="stylesheet">-->
+    <link href="/css/messenger-theme-ice.css" rel="stylesheet">
+
+    <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
+    <!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+    <style type="text/css">
+        * {
+            font-size: 16px;
+        }
+
+        ul {
+            font-size: 18px;
+            list-style-type: none;
+
+        }
+    </style>
+</head>
+
+<body>
+<!--<p th:text="${orderResVoList}"></p>-->
+<div class="row">
+    <div class="col-md-11">
+        <div class="panel panel-info">
+            <div class="panel-heading panel ">我的订单</div>
+            <div class="panel-body">
+                <table class="table table-hover">
+                    <tr th:if="${orderResVoList}">
+                        <th>用户名</th>
+                        <th>商品名</th>
+                        <th>个数</th>
+                        <th>实付款</th>
+                        <th>下单时间</th>
+                        <th>过期时间</th>
+                        <th>订单状态</th>
+                        <th>地址</th>
+                    </tr>
+                    <tr th:each="orderResVo:${orderResVoList}">
+                        <td th:text="${orderResVo.nickName}"></td>
+                        <td th:text="${orderResVo.skuName}"></td>
+                        <td th:text="${orderResVo.skuNum}"></td>
+                        <td th:text="${orderResVo.totalAmount}"></td>
+
+
+                        <td th:text="${orderResVo.createTime}"></td>
+                        <td th:text="${orderResVo.expireTime}"></td>
+                        <td th:text="${orderResVo.orderStatus}"></td>
+
+                        <td th:text="${orderResVo.address}"></td>
+
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-1">
+        <button type="button" id="toIndex" class="btn btn-primary glyphicon glyphicon-menu-left">返回</button>
+    </div>
+</div>
+
+
+<!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+<script src="/js/jquery-3.1.0.min.js"></script>
+<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/messenger.js"></script>
+<script src="/js/messenger-theme-future.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $._messengerDefaults = {
+            extraClasses: 'messenger-fixed messenger-theme-ice messenger-on-top',
+            maxMessages: 1
+        }
+
+        $("#toIndex").bind("click", function () {
+            window.location = "/index";
+        });
+        //
+        // $.ajax({
+        //     type: "GET",
+        //     url: "/cart/listItem",
+        //     success: function (res) {
+        //         if (res.success === true) {
+        //             $("table .content").remove();
+        //             var cartList = res.data.cartList;
+        //             console.log(res.data);
+        //
+        //             $.each(cartList, function (i, n) {
+        //                 var tr = '<tr class="content"></tr>';
+        //                 var skuNameTd = "<td>" + n.skuName + "</td>";
+        //                 var skuCountTd = '<td><span id="' + n.skuId + '" cartId="' + n.id + '">' + n.skuCount + '</span></td>';
+        //                 var cartPriceTd = "<td class='cartPrice'>" + n.cartPrice + "</td>";
+        //
+        //                 //
+        //                 var toBillTd = '<td cartId="' + n.id + '">'
+        //                     + '<button type="button" class="btn btn-info toBill">去结账</button>'
+        //                     + '</td>';
+        //
+        //                 var deleteCartTd = '<td cartId="' + n.id + '">'
+        //                     + '<button type="button" class="btn btn-danger deleteCart">删除</button>'
+        //                     + '</td>';
+        //                 var decrButton = '<button type="button" class="decrButton btn btn-default glyphicon glyphicon-minus btn-xs"> </button>';
+        //                 var incrButton = '<button type="button" class="incrButton btn btn-default glyphicon glyphicon-plus btn-xs"> </button>';
+        //                 skuCountTd = $(skuCountTd).append(incrButton);
+        //                 skuCountTd = $(skuCountTd).prepend(decrButton);
+        //                 $(tr).append(skuNameTd).append(skuCountTd)
+        //                     .append(cartPriceTd).append(toBillTd)
+        //                     .append(deleteCartTd)
+        //                     .appendTo($("table"));
+        //
+        //             });
+        //
+        //             $(".decrButton").bind("click", function () {
+        //                 var cartPrice = $(this).parent("td").next('.cartPrice').text();
+        //                 var cartPriceE = $(this).parent("td").next('.cartPrice');
+        //                 console.log(cartPrice + "----");
+        //                 var countId = $(this).next("span").text();
+        //                 var skuId = $(this).next("span").attr("id");
+        //                 var cartId = $(this).next("span").attr("cartId");
+        //
+        //                 if (countId == 1) {
+        //
+        //                 } else {
+        //                     //$(this).removeAttr("disabled");
+        //                 }
+        //
+        //                 if (countId > 1) {
+        //
+        //                     countId--;
+        //
+        //                     $.ajax({
+        //                         type: "PUT",
+        //                         url: "/cart/updateItem/" + cartId + "/" + skuId + "/" + countId,
+        //                         success: function (res) {
+        //                             if (res.success === true) {
+        //                                 console.log(res.data.cartItem.cartPrice);
+        //                                 cartPrice = res.data.cartItem.cartPrice;
+        //                                 cartPriceE.text(cartPrice);
+        //                             }
+        //                         }
+        //                     });
+        //                     $(this).next("span").text(countId);
+        //                 } else {
+        //
+        //                 }
+        //             });
+        //
+        //             $(".incrButton").bind("click", function () {
+        //                 var cartPrice = $(this).parent("td").next('.cartPrice').text();
+        //                 var cartPriceE = $(this).parent("td").next('.cartPrice');
+        //                 var countId = $(this).prev("span").text();
+        //                 var skuId = $(this).prev("span").attr("id");
+        //                 var cartId = $(this).prev("span").attr("cartId");
+        //                 countId++;
+        //                 $(this).prev("span").text(countId);
+        //
+        //
+        //                 $.ajax({
+        //                     type: "PUT",
+        //                     url: "/cart/updateItem/" + cartId + "/" + skuId + "/" + countId,
+        //                     success: function (res) {
+        //                         if (res.success === true) {
+        //                             console.log(res.data.cartItem.cartPrice);
+        //                             cartPrice = res.data.cartItem.cartPrice;
+        //                             cartPriceE.text(cartPrice);
+        //                         }
+        //                     }
+        //                 });
+        //                 //$(this).next("span").text(countId);
+        //
+        //
+        //             });
+        //
+        //
+        //             function updateCartItem() {
+        //
+        //             }
+        //
+        //             $(".deleteCart").click(function () {
+        //                 var cartId = $(this).parent("td").attr("cartId");
+        //                 var name = $(this).parent("td").parent("tr").children().eq(0).text();
+        //                 //alert(name);
+        //                 // alert(cartId);
+        //                 var delteFlag = confirm("您确定要删除"+name);
+        //                 if (delteFlag === true) {
+        //                     $.ajax({
+        //                         type: "DELETE",
+        //                         url: "/cart/deleteItem/" + cartId ,
+        //                         success: function (res) {
+        //                             if (res.success === true) {
+        //                                 window.location = "/cart/toCart";
+        //                             }
+        //                         }
+        //                     });
+        //                 } else {
+        //
+        //                 }
+        //
+        //
+        //             });
+        //
+        //             $(".toBill").click(function () {
+        //                 var cartId = $(this).parent("td").attr("cartId");
+        //                 // $.globalMessenger().post({
+        //                 //     hideAfter: 2,
+        //                 //     message: "去支付",//提示信息
+        //                 //     type: 'success',//消息类型。error、info、success
+        //                 //     showCloseButton: true,//是否显示关闭按钮
+        //                 //     hideOnNavigate: true //是否隐藏导航
+        //                 // });
+        //
+        //                 window.location = "/cart/toBill/" + cartId;
+        //             });
+        //         }
+        //     }
+        //
+        // });
+
+    });
+</script>
+</body>
+
+</html>

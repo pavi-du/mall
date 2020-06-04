@@ -65,8 +65,11 @@
             </span>
         </div>
     </div>
-    <div class="col-md-2">
-        <button type="button" id="viewCart" class="btn btn-primary glyphicon glyphicon-arrow-right">查看购物车</button>
+    <div class="col-md-1">
+        <button type="button" id="viewCart" class="btn btn-primary btn-sm glyphicon glyphicon-arrow-right">查看购物车</button>
+    </div>
+    <div class="col-md-1">
+        <button type="button" id="viewOrderDetail" class="btn btn-link">查看订单<span class="glyphicon glyphicon-chevron-right"></span></button>
     </div>
 </div>
 <div>
@@ -85,7 +88,7 @@
             <tr>
                 <th>名字</th>
                 <th>价格</th>
-                <th>个数</th>
+                <th>库存</th>
                 <th>描述</th>
                 <th>操作</th>
             </tr>
@@ -162,6 +165,11 @@
             window.location = "/cart/toCart";
         });
 
+
+        $("#viewOrderDetail").bind("click", function () {
+            //alert("hello");
+            window.location = "/order/detail/toOrderDetail";
+        });
 
         $.ajax({
             type: "POST",
